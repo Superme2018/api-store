@@ -23,7 +23,7 @@ class SyncCareQualityData extends Command
      *
      * @var string
      */
-    protected $description = 'Retrieve any new records that are cont currently stored in the database.';
+    protected $description = 'Retrieve any new records that are not currently stored in the database.';
 
     /**
      * Execute the console command.
