@@ -15,10 +15,15 @@ class CareQualityData
     // Just incase needed
     public static function dataSync()
     {
-        dd(
-            "Is this wokring:" . __FUNCTION__,
-            CareQualityDataUtilities::getLatestData()
-        );
+
+        if(!$apiLimits = CareQualityDataUtilities::getApiLimits())
+        {
+            dd("Just a quick check to make sure we have data. Even though null has not been handled yet.");
+        }
+
+        dd(CareQualityDataUtilities::getLatestData($apiLimits));
+
+
     }
 
 }
