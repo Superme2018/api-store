@@ -32,7 +32,6 @@ class SyncCareQualityData extends Command
      */
     public function handle()
     {
-        // Quick check to see if the class is hooked up.
         CareQualityDataService::dataSync();
     }
 }

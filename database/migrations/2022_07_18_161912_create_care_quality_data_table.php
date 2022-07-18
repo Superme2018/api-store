@@ -14,8 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('care_quality_data', function (Blueprint $table) {
+
             $table->id();
             $table->timestamps();
+
+            $table->string('provider_id', 50);
+            $table->string('provider_name', 250);
+
         });
     }
 

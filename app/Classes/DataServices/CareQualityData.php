@@ -21,8 +21,7 @@ class CareQualityData
             dd("Just a quick check to make sure we have data. Even though null has not been handled yet.");
         }
 
-        dd(CareQualityDataUtilities::getLatestData($apiLimits));
-
+        CareQualityDataUtilities::getLatestData($apiLimits);
 
     }
 

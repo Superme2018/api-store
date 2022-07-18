@@ -3,6 +3,7 @@
 namespace App\Classes\DataServices;
 
 // Models
+use App\Models\CareQualityData;
 
 // Framework
 
@@ -41,27 +42,48 @@ class Utilities
     // Get latest data from CQC data feed.
     public static function getLatestData($apiLimits)
     {
-        // Iterate of a selection of the number of pages found.
-        for ($x = 1; $x <= $apiLimits['totalPages']; $x ++)
+
+        // Iterate over a selection of the number of pages found.
+        for ($pageCount = 1; $pageCount <= $apiLimits['totalPages']; $pageCount ++)
         {
             // Construct the end point using the page offset.
-            $endPoint = "https://api.cqc.org.uk/public/v1/providers?page=" . $x . "&perPage=" . $apiLimits['perPage'];
-            $result = self::curlRequest($endPoint);
+            $endPoint = "https://api.cqc.org.uk/public/v1/providers?page=" . $pageCount . "&perPage=" . $apiLimits['perPage'];
+            $results = self::curlRequest($endPoint);
+
+            // May want to check that "providers" exists here.
+
+            // Process the result per page.
+            foreach($results->providers as $result)
+            {
+                if(!$careQualityData = CareQualityData::where('provider_id', $result->providerId)->first())
+                {
+                    $careQualityData = new CareQualityData();
+                    $careQualityData->provider_id = $result->providerId;
+                    $careQualityData->provider_name = $result->providerName;
+                }
+
+                $careQualityData->save();
+
+            }
 
             // Stop after 1 has been reached.
-            if($x > 1)
+            if($pageCount > 4)
             {
-                dd($x, $result);
+                dd("End of insert test.");
             }
+
+            // Small delay to avoid overloading the API.
+            sleep(1);
 
         }
 
         // Seems a bit odd but will also store check and store the data here.
         // I guess a log of any issues encountered can be passed back to the calling class.
 
-        dd($result);
+        dd($results);
     }
 
+    // The curl request code. Could review this for testing.
     private static function curlRequest($endPoint)
     {
         $ch = curl_init();
