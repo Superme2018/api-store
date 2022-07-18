@@ -52,7 +52,7 @@ class Utilities
 
             // May want to check that "providers" exists here.
 
-            // Process the result per page.
+            // Process the result per page, store data to the database.
             foreach($results->providers as $result)
             {
                 if(!$careQualityData = CareQualityData::where('provider_id', $result->providerId)->first())
@@ -66,7 +66,7 @@ class Utilities
 
             }
 
-            // Stop after 1 has been reached.
+            // Stop after 4 pages have been reached.
             if($pageCount > 4)
             {
                 dd("End of insert test.");
@@ -77,10 +77,6 @@ class Utilities
 
         }
 
-        // Seems a bit odd but will also store check and store the data here.
-        // I guess a log of any issues encountered can be passed back to the calling class.
-
-        dd($results);
     }
 
     // The curl request code. Could review this for testing.
