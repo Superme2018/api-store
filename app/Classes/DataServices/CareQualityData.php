@@ -12,16 +12,67 @@ use App\Classes\DataServices\Utilities AS CareQualityDataUtilities;
 class CareQualityData
 {
 
-    // Just incase needed
-    public static function dataSync()
+    public static function getApiLimits()
     {
+        // A little odd but has to be set just incase the API default was to change.
+        $perPage = 1000;
 
-        if(!$apiLimits = CareQualityDataUtilities::getApiLimits())
+        // Default API requist just to get hold of the total number of pages.
+        $endPoint = "https://api.cqc.org.uk/public/v1/providers?perPage=" . $perPage;
+
+        // Making use of a quick CURL request to get the data.
+        $result = CareQualityDataUtilities::curlRequest($endPoint);
+
+        if(!isset($result->totalPages))
         {
-            dd("Just a quick check to make sure we have data. Even though null has not been handled yet.");
+            dd("Total number of pages not found, Need an error handler here."); // Come back to this later.
         }
 
-        CareQualityDataUtilities::getLatestData($apiLimits);
+        if(!isset($result->perPage))
+        {
+            dd("Number of records per page not found, Need an error handler here."); // Come back to this later.
+        }
+
+        // Set the params.
+        $params['totalPages'] = $result->totalPages;
+        $params['perPage'] = $result->perPage;
+
+        return $params;
+
+    }
+
+    // Get latest data from CQC data feed.
+    public static function getLatestData($apiLimits)
+    {
+
+        // Iterate over a selection of the number of pages found.
+        for ($pageCount = 1; $pageCount <= $apiLimits['totalPages']; $pageCount ++)
+        {
+            // Construct the end point using the page offset.
+            $endPoint = "https://api.cqc.org.uk/public/v1/providers?page=" . $pageCount . "&perPage=" . $apiLimits['perPage'];
+            $results = CareQualityDataUtilities::curlRequest($endPoint);
+
+            // May want to check that "providers" exists here.
+
+            // Process the result per page, store data to the database.
+            foreach($results->providers as $result)
+            {
+                if(!CareQualityDataUtilities::storeCareQualityRecord($result))
+                {
+                    dd("Creation of care quality record failed:", $result); // Come back to this later.
+                }
+            }
+
+            // Stop after 4 pages have been reached.
+            if($pageCount > 4)
+            {
+                dd("End of insert test.");
+            }
+
+            // Small delay to avoid overloading the API.
+            sleep(1);
+
+        }
 
     }
 

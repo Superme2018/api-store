@@ -32,6 +32,13 @@ class SyncCareQualityData extends Command
      */
     public function handle()
     {
-        CareQualityDataService::dataSync();
+
+        if(!$apiLimits = CareQualityDataService::getApiLimits())
+        {
+            dd("Just a quick check to make sure we have data. Even though null has not been handled yet.");
+        }
+
+        CareQualityDataService::getLatestData($apiLimits);
     }
+
 }
