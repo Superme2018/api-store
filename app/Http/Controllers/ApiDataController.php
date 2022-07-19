@@ -12,15 +12,21 @@ class ApiDataController extends Controller
 {
     public function getRecords(Request $request)
     {
-        dd($request);
+        if($request->has(['itemsPerPage', 'pageNumber']))
+        {
+           return CareQualityDataService::getRecordsPaginated($request->get('itemsPerPage'), $request->get('pageNumber'));
+        }
 
-        CareQualityDataService::getRecordsPaginated(15, 10);
+        return CareQualityDataService::getRecordsPaginated();
     }
 
     public function getRecord(Request $request)
     {
-        dd($request);
+        if(!$request->get('providerId'))
+        {
+            return json_encode(["message" => "A Provider Id is required."]);
+        }
 
-        CareQualityDataService::getRecordByProviderId('1-101664105');
+        return CareQualityDataService::getRecordByProviderId($request->get('providerId')); //1-101664105
     }
 }
