@@ -3,8 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-// Classes
-use App\Classes\DataServices\CareQualityData AS CareQualityDataService;
+// Controllers
+use App\Http\Controllers\ApiDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,17 +17,5 @@ use App\Classes\DataServices\CareQualityData AS CareQualityDataService;
 |
 */
 
-Route::get('/records', function(Request $request) {
-
-    dd($request);
-
-    CareQualityDataService::getRecordsPaginated(15, 10);
-
-});
-
-Route::get('/records', function(Request $request) {
-
-    dd($request);
-
-    CareQualityDataService::getRecordByProviderId('1-101664105');
-});
+Route::get('/records', [ApiDataController::class, 'getRecords']);
+Route::get('/record', [ApiDataController::class, 'getRecord']);
