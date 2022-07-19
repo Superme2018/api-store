@@ -44,4 +44,23 @@ class Utilities
         return false;
     }
 
+    public static function getRecord($providerID)
+    {
+
+        $query = CareQualityData::where('provider_id', $providerID);
+
+        if(!$query->count())
+        {
+            return null;
+        }
+
+        return CareQualityData::where('provider_id', $providerID)->first()->toJson();
+    }
+
+    public static function getRecords($itemsPerPage, $pageNumber)
+    {
+        // Could wrap this into an array, that also contains extra data, such as total number of pages.
+        return CareQualityData::paginate($itemsPerPage, ['*'], 'page', $pageNumber)->toJson();
+    }
+
 }

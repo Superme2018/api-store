@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+// Classes
+use App\Classes\DataServices\CareQualityData AS CareQualityDataService;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,6 +17,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('/records', function(Request $request) {
+
+    dd($request);
+
+    CareQualityDataService::getRecordsPaginated(15, 10);
+
+});
+
+Route::get('/records', function(Request $request) {
+
+    dd($request);
+
+    CareQualityDataService::getRecordByProviderId('1-101664105');
 });

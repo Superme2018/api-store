@@ -4,6 +4,7 @@ namespace App\Classes\DataServices;
 
 // Class
 use App\Classes\DataServices\Utilities AS CareQualityDataUtilities;
+use Hamcrest\Arrays\IsArray;
 
 // Models
 
@@ -41,9 +42,14 @@ class CareQualityData
 
     }
 
-    // Get latest data from CQC data feed.
-    public static function getLatestData($apiLimits)
+
+    public static function syncLatestData($apiLimits)
     {
+
+        if(!count($apiLimits)) // <- Note this will fail if not an array. Need to check that it is an array first.
+        {
+            dd(" apiLimits are required.");
+        }
 
         // Iterate over a selection of the number of pages found.
         for ($pageCount = 1; $pageCount <= $apiLimits['totalPages']; $pageCount ++)
@@ -74,6 +80,34 @@ class CareQualityData
 
         }
 
+    }
+
+    public static function getRecordsPaginated($itemsPerPage = null, $pageNumber = null)
+    {
+
+         // Hmm, bit of replication going on here, but a good place to set defaults.
+        if(!$itemsPerPage)
+        {
+            $itemsPerPage = 15;
+        }
+
+        if(!$pageNumber)
+        {
+            $pageNumber = 1;
+        }
+
+        return CareQualityDataUtilities::getRecords($itemsPerPage, $pageNumber);
+    }
+
+    public static function getRecordByProviderId($providerID = null)
+    {
+
+        if(!$providerID)
+        {
+            dd("Provider ID is required!");
+        }
+
+        return CareQualityDataUtilities::getRecord($providerID);
     }
 
 }
