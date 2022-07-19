@@ -4,11 +4,6 @@ namespace App\Classes\DataServices;
 
 // Class
 use App\Classes\DataServices\Utilities AS CareQualityDataUtilities;
-use Hamcrest\Arrays\IsArray;
-
-// Models
-
-// Framework
 
 class CareQualityData
 {
@@ -41,7 +36,6 @@ class CareQualityData
         return $params;
 
     }
-
 
     public static function syncLatestData($apiLimits)
     {
