@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-
 // Classes
 use App\Classes\DataServices\CareQualityData AS CareQualityDataService;
 
@@ -11,6 +10,9 @@ use Illuminate\Console\Command;
 
 class SyncCareQualityData extends Command
 {
+
+    protected $isRemoteAPIStatus;
+
     /**
      * The name and signature of the console command.
      *
@@ -25,6 +27,16 @@ class SyncCareQualityData extends Command
      */
     protected $description = 'Retrieve any new records that are not currently stored in the database.';
 
+     /**
+     * Construct for pre-checks.
+     *
+     */
+    public function __construct()
+    {
+        parent::__construct(); // <- Just a requirement to use construct in a command.
+        $this->isRemoteAPIStatus = CareQualityDataService::checkRemoteAPIStatus();
+    }
+
     /**
      * Execute the console command.
      *
@@ -32,7 +44,7 @@ class SyncCareQualityData extends Command
      */
     public function handle()
     {
-        CareQualityDataService::syncLatestData(CareQualityDataService::getApiLimits());
+        CareQualityDataService::syncLatestData(CareQualityDataService::getApiLimits(), $this->isRemoteAPIStatus);
     }
 
 }

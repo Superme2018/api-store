@@ -9,11 +9,19 @@ use App\Classes\DataServices\CareQualityData AS CareQualityDataService;
 
 class ApiDataController extends Controller
 {
+
+    protected $isRemoteAPIStatus;
+
+    public function __construct()
+    {
+        $this->isRemoteAPIStatus = CareQualityDataService::checkRemoteAPIStatus();
+    }
+
     public function getRecords(Request $request)
     {
         if($request->has(['itemsPerPage', 'pageNumber']))
         {
-           return CareQualityDataService::getRecordsPaginated($request->get('itemsPerPage'), $request->get('pageNumber'));
+           return CareQualityDataService::getRecordsPaginated($request->get('itemsPerPage'), $request->get('pageNumber'), $this->isRemoteAPIStatus);
         }
 
         return CareQualityDataService::getRecordsPaginated();
@@ -26,6 +34,6 @@ class ApiDataController extends Controller
             return json_encode(["message" => "A Provider Id is required."]);
         }
 
-        return CareQualityDataService::getRecordByProviderId($request->get('providerId')); //1-101664105
+        return CareQualityDataService::getRecordByProviderId($request->get('providerId'), $this->isRemoteAPIStatus); //1-101664105
     }
 }

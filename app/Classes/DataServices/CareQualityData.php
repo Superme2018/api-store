@@ -8,6 +8,17 @@ use App\Classes\DataServices\Utilities AS CareQualityDataUtilities;
 class CareQualityData
 {
 
+    public static function checkRemoteAPIStatus()
+    {
+        if(CareQualityDataUtilities::checkRemoteApiStatus() != 200)
+        {
+            return true;
+        }
+
+        return false;
+
+    }
+
     public static function getApiLimits()
     {
         // A little odd but has to be set just incase the API default was to change.
@@ -37,8 +48,13 @@ class CareQualityData
 
     }
 
-    public static function syncLatestData($apiLimits)
+    public static function syncLatestData($apiLimits, $apiStatus)
     {
+
+        if(!$apiStatus)
+        {
+            dd("Remote API is down.");
+        }
 
         if(!count($apiLimits)) // <- Note this will fail if not an array. Need to check that it is an array first.
         {
@@ -76,7 +92,7 @@ class CareQualityData
 
     }
 
-    public static function getRecordsPaginated($itemsPerPage = null, $pageNumber = null)
+    public static function getRecordsPaginated($itemsPerPage = null, $pageNumber = null, $apiStatus)
     {
 
          // Hmm, bit of replication going on here, but a good place to set defaults.
@@ -93,7 +109,7 @@ class CareQualityData
         return CareQualityDataUtilities::getRecords($itemsPerPage, $pageNumber);
     }
 
-    public static function getRecordByProviderId($providerID = null)
+    public static function getRecordByProviderId($providerID = null, $apiStatus)
     {
 
         if(!$providerID)
