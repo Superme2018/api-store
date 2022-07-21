@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 // Classes
 use App\Classes\DataServices\CareQualityData AS CareQualityDataService;
-
+use App\Models\CareQualityData;
 // Framework
 use Illuminate\Console\Command;
 
@@ -44,7 +44,17 @@ class SyncCareQualityData extends Command
      */
     public function handle()
     {
-        CareQualityDataService::syncLatestData(CareQualityDataService::getApiLimits(), $this->isRemoteAPIStatus);
+
+        // Doing something creative here.
+        // Will first check the first process is complete and then run the second process.
+
+        if(CareQualityDataService::syncLatestProviders(CareQualityDataService::getApiLimits(), $this->isRemoteAPIStatus))
+        {
+            dd("Next loop through the already stored data and store the relating data from the API endpoint using the product_id");
+
+            // Pace holder for the outlined above.
+            CareQualityDataService::syncStoredProviderDetails(); //<-- See info inside the function, stopped here as its 2am and im pooped :).
+        }
     }
 
 }

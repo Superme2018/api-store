@@ -48,7 +48,7 @@ class CareQualityData
 
     }
 
-    public static function syncLatestData($apiLimits, $apiStatus)
+    public static function syncLatestProviders($apiLimits, $apiStatus)
     {
 
         if(!$apiStatus)
@@ -82,7 +82,7 @@ class CareQualityData
             // Stop after 4 pages have been reached.
             if($pageCount > 4)
             {
-                dd("End of insert test.");
+                return true;
             }
 
             // Small delay to avoid overloading the API.
@@ -90,6 +90,11 @@ class CareQualityData
 
         }
 
+    }
+
+    public static function syncStoredProviderDetails()
+    {
+        // Use all the records but chunk the query, also try and use of a scope if possible.
     }
 
     public static function getRecordsPaginated($apiStatus, $itemsPerPage = null, $pageNumber = null, )
