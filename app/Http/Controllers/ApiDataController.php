@@ -21,10 +21,10 @@ class ApiDataController extends Controller
     {
         if($request->has(['itemsPerPage', 'pageNumber']))
         {
-           return CareQualityDataService::getRecordsPaginated($request->get('itemsPerPage'), $request->get('pageNumber'), $this->isRemoteAPIStatus);
+           return CareQualityDataService::getRecordsPaginated($this->isRemoteAPIStatus, $request->get('itemsPerPage'), $request->get('pageNumber'));
         }
 
-        return CareQualityDataService::getRecordsPaginated();
+        return CareQualityDataService::getRecordsPaginated($this->isRemoteAPIStatus);
     }
 
     public function getRecord(Request $request)

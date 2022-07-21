@@ -92,7 +92,7 @@ class CareQualityData
 
     }
 
-    public static function getRecordsPaginated($itemsPerPage = null, $pageNumber = null, $apiStatus)
+    public static function getRecordsPaginated($apiStatus, $itemsPerPage = null, $pageNumber = null, )
     {
 
          // Hmm, bit of replication going on here, but a good place to set defaults.
