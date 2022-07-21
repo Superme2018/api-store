@@ -21,4 +21,4 @@ or
 ```/api/records?itemsPerPage=50&pageNumber=5```
 
 * Displays the providers based on itemsPerPage and pageNumber.
-* If not both provided, the default are itemsPerPage = 15 and pageNumber = 1
+* If not both provided, the defaults are itemsPerPage = 15 and pageNumber = 1
