@@ -1,4 +1,4 @@
-# API Sore
+# API Store
 
 A simple application code base to store some remote API data to a local SQLite DB.
 
