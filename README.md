@@ -25,6 +25,6 @@ or
 
 ### TODOs
 
-* Add in the extra providers data via an eloquent relation (will pull the extra data and hook upto the providerId).
+* Add in the extra providers data via an eloquent relation (will pull the extra data via the command and hook upto the providerId).
 * Some code documentation to follow the application logic.
 * Possibly API endpoint documentation using rout based parameters.
