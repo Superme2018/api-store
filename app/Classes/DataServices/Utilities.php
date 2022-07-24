@@ -63,21 +63,4 @@ class Utilities
         return CareQualityData::paginate($itemsPerPage, ['*'], 'page', $pageNumber)->toJson();
     }
 
-    public static function checkRemoteApiStatus()
-    {
-
-        $apiBaseEndpoint = 'https://api.cqc.org.uk/public/v1/providers';
-
-        $ch = curl_init($apiBaseEndpoint);
-        curl_setopt($ch, CURLOPT_HEADER, true);    // we want headers
-
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-        curl_setopt($ch, CURLOPT_TIMEOUT,10);
-
-        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
-
-        return $httpcode;
-    }
-
 }

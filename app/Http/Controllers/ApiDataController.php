@@ -14,7 +14,7 @@ class ApiDataController extends Controller
 
     public function __construct()
     {
-        $this->isRemoteAPIStatus = CareQualityDataService::checkRemoteAPIStatus();
+        $this->isRemoteAPIStatus = (new CareQualityDataService())->checkRemoteAPIStatus(); // <- Only used once so just initialized it inline.
     }
 
     public function getRecords(Request $request)

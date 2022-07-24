@@ -34,7 +34,7 @@ class SyncCareQualityData extends Command
     public function __construct()
     {
         parent::__construct(); // <- Just a requirement to use construct in a command.
-        $this->isRemoteAPIStatus = CareQualityDataService::checkRemoteAPIStatus();
+        $this->isRemoteAPIStatus = (new CareQualityDataService())->checkRemoteAPIStatus(); // <- Only used once so just initialized it inline.
     }
 
     /**

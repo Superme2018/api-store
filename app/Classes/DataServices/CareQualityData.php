@@ -4,13 +4,23 @@ namespace App\Classes\DataServices;
 
 // Class
 use App\Classes\DataServices\Utilities AS CareQualityDataUtilities;
+use App\Classes\SystemChecks\StatusChecks;
 
 class CareQualityData
 {
 
-    public static function checkRemoteAPIStatus()
+    protected $statusChecks;
+
+    public function __construct()
     {
-        if(CareQualityDataUtilities::checkRemoteApiStatus() != 200)
+        // This will fire the containing constructor, in result will check the required .env variables.
+        $this->statusChecks = new StatusChecks();
+    }
+
+    public function checkRemoteAPIStatus()
+    {
+
+        if($this->statusChecks->checkRemoteApiStatus() != 200)
         {
             return true;
         }
