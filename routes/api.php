@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 
 // Controllers
 use App\Http\Controllers\ApiDataController;
+use App\Http\Controllers\ApiErrorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +20,10 @@ use App\Http\Controllers\ApiDataController;
 
 Route::get('/records', [ApiDataController::class, 'getRecords']);
 Route::get('/record', [ApiDataController::class, 'getRecord']);
+
+/**
+ * Error handler routs.
+ *
+ */
+
+Route::get('/error/global/missing-env-params', [ApiErrorController::class, 'missing_env_params'])->name('missing_env_params');

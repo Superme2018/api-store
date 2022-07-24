@@ -2,11 +2,12 @@
 
 namespace App\Classes\SystemChecks;
 
-// Class
+// Classes
 use App\Classes\SystemChecks\Utilities AS SystemCheckUtilities;
+use App\Classes\ErrorHandlers\SystemCheckErrors;
 
-// Framework
-use Exception;
+// Exceptions
+use App\Classes\Exceptions\MissingEnvVariables;
 
 class StatusChecks
 {
@@ -14,16 +15,13 @@ class StatusChecks
     public function __construct()
     {
         // Check that we have the required variables in the
-        // .env, before proceeding with this class.
-
         try
         {
             SystemCheckUtilities::checkEnvVariableExists();
         }
-        catch (Exception $e)
+        catch (MissingEnvVariables $missingEnvVariables)
         {
-            // Hmm, exception not getting caught as expected.
-            return SystemCheckUtilities::error_missing_env_params();
+            SystemCheckErrors::error_missing_env_params($missingEnvVariables->getData());
         }
 
     }
@@ -34,7 +32,7 @@ class StatusChecks
         $apiBaseEndpoint = env('API_URL_ENDPOINT');
 
         $ch = curl_init($apiBaseEndpoint);
-        curl_setopt($ch, CURLOPT_HEADER, true);    // we want headers
+        curl_setopt($ch, CURLOPT_HEADER, true);
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
         curl_setopt($ch, CURLOPT_TIMEOUT,10);

@@ -4,20 +4,20 @@ namespace App\Classes\Exceptions;
 
 // Framework
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 /**
  * Define a custom exception class
  */
-abstract class MissingEnvVariables extends Exception
+class MissingEnvVariables extends Exception
 {
-    public function render(Request $request): Response
+    public function __construct($message, $data)
     {
-        $status = 400;
-        $error = "Something is wrong";
-        $help = "Contact the sales team to verify";
+        $this->_data = $data;
+        parent::__construct($message);
+    }
 
-        return response(["error" => $error, "help" => $help], $status);
+    public function getData()
+    {
+        return $this->_data;
     }
 }

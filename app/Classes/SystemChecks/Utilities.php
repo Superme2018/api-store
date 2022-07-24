@@ -2,8 +2,9 @@
 
 namespace App\Classes\SystemChecks;
 
-// Not used yet.
+// Classes
 use App\Classes\Exceptions\MissingEnvVariables AS MissingEnvVariablesException;
+use App\Classes\GlobalConfig\GlobalConfig;
 
 // Framework
 use Exception;
@@ -18,7 +19,7 @@ class Utilities
     {
 
         // Maybe to also move this out to a configuration class.
-        $envVarsToCheckFor = self::config_envVarsToCheckFor();
+        $envVarsToCheckFor = GlobalConfig::envVarsDefined();
 
         foreach($envVarsToCheckFor as $envVar)
         {
@@ -27,29 +28,9 @@ class Utilities
                 return true;
             }
 
-            throw new Exception('Missing required ENV params.');
+            throw new MissingEnvVariablesException('Missing required ENV param: ' . $envVar, $envVar);
         }
 
     }
 
-    // Move this over to a new class, with a cascading error creation.
-
-    /**
-     * @return json
-    */
-    public static function error_missing_env_params():string
-    {
-        $errorMessage['error_message'] = "Missing global environment parameters";
-        $errorMessage['error_supporting_data'] = ["env_params" => self::config_envVarsToCheckFor()];
-
-        return json_encode($errorMessage);
-    }
-
-    /**
-     * @return array
-    */
-    private static function config_envVarsToCheckFor()
-    {
-        return ['API_URL_ENDPOINT'];
-    }
 }
