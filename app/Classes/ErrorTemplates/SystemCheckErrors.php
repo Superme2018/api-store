@@ -2,11 +2,6 @@
 
 namespace App\Classes\ErrorTemplates;
 
-// Classes
-use App\Classes\GlobalConfig\GlobalConfig;
-// Framework
-use Illuminate\Support\Facades\Redirect;
-
 class SystemCheckErrors
 {
     /**
