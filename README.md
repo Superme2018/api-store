@@ -1,3 +1,4 @@
+# DUFF, Pending Reomval, intersting code getting moved to fresh project.
 # API Store
 
 A simple application code base, to store some remote API data to a local SQLite DB.
