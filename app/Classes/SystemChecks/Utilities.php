@@ -6,9 +6,6 @@ namespace App\Classes\SystemChecks;
 use App\Classes\Exceptions\MissingEnvVariables AS MissingEnvVariablesException;
 use App\Classes\GlobalConfig\GlobalConfig;
 
-// Framework
-use Exception;
-
 class Utilities
 {
 
@@ -18,7 +15,6 @@ class Utilities
     public static function checkEnvVariableExists():bool
     {
 
-        // Maybe to also move this out to a configuration class.
         $envVarsToCheckFor = GlobalConfig::envVarsDefined();
 
         foreach($envVarsToCheckFor as $envVar)
