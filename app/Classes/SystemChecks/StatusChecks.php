@@ -12,7 +12,7 @@ use App\Classes\Exceptions\MissingEnvVariables;
 class StatusChecks
 {
 
-    public function __construct()
+    public function checkGlobalVarsExist()
     {
         // Check that we have the required variables in the
         try
