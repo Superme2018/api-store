@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Classes\ErrorHandlers;
+namespace App\Classes\ErrorTemplates;
 
 // Classes
 use App\Classes\GlobalConfig\GlobalConfig;
