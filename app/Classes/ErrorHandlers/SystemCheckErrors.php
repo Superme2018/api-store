@@ -4,7 +4,6 @@ namespace App\Classes\ErrorHandlers;
 
 // Classes
 use App\Classes\GlobalConfig\GlobalConfig;
-use GuzzleHttp\Psr7\Response;
 // Framework
 use Illuminate\Support\Facades\Redirect;
 
