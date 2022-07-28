@@ -3,7 +3,7 @@
 namespace App\Classes\SystemChecks;
 
 // Classes
-use App\Classes\Exceptions\MissingEnvVariables AS MissingEnvVariablesException;
+use App\Exceptions\MissingEnvVariables AS MissingEnvVariablesException;
 use App\Classes\GlobalConfig\GlobalConfig;
 
 class StatusChecks
