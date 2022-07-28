@@ -31,7 +31,6 @@ class MissingEnvVariables extends Exception
     public function render($request)
     {
         // Is the request needed?
-
         return response()->view('errors.system-config', [
             "message" => $this->message,
             "data" => $this->data
