@@ -3,28 +3,32 @@
 namespace App\Classes\SystemChecks;
 
 // Classes
-use App\Classes\SystemChecks\Utilities AS SystemCheckUtilities;
-use App\Classes\ErrorHandlers\SystemCheckErrors;
-
-// Exceptions
-use App\Classes\Exceptions\MissingEnvVariables;
+use App\Classes\Exceptions\MissingEnvVariables AS MissingEnvVariablesException;
+use App\Classes\GlobalConfig\GlobalConfig;
 
 class StatusChecks
 {
-    /*
-    |--------------------------------------------------------------------------
-    | A check to see if any defined .env vars are missing.
-    |--------------------------------------------------------------------------
+
+    /**
+     * @return bool
     */
-    public function checkGlobalVarsExist()
+    public static function checkEnvVariablesExist():bool
     {
-        try
+
+        $envVarsToCheckFor = GlobalConfig::envVarsDefined();
+
+        foreach($envVarsToCheckFor as $envVar)
         {
-            SystemCheckUtilities::checkEnvVariableExists();
+            if(env($envVar))
+            {
+                continue;
+            }
+
+            throw new MissingEnvVariablesException('Missing required ENV param: ' . $envVar, $envVar);
         }
-        catch (MissingEnvVariables $missingEnvVariables)
-        {
-            SystemCheckErrors::error_missing_env_params($missingEnvVariables->getData());
-        }
+
+        return true;
+
     }
+
 }

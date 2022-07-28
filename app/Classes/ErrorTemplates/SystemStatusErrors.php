@@ -2,17 +2,15 @@
 
 namespace App\Classes\ErrorTemplates;
 
-class SystemCheckErrors
+class SystemStatusErrors
 {
     /**
      * @param missingParam
-     * @return json
+     * @return mixed
     */
     public static function error_missing_env_params($missingParam)
     {
         $errorMessage['error_message'] = "Missing global environment parameters.";
         $errorMessage['error_data'] = ["missing_env_param" => $missingParam];
-
-        response()->json($errorMessage, 503)->send();
     }
 }

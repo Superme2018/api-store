@@ -11,7 +11,7 @@ class GlobalConfig
      */
     public static function envVarsDefined()
     {
-        return ['API_URL_ENDPOINT'];
+        return ['APP_ENV', 'API_URL_ENDPOINT'];
     }
 
 }
